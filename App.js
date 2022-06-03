@@ -1,25 +1,24 @@
-import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
-import { Button } from '@rneui/base';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Provider as PaperProvider } from 'react-native-paper';
+
+import WelcomeScreen from './screens/WelcomeScreen';
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SafeAreaProvider>
+    <PaperProvider>
       <NavigationContainer>
-        <View style={styles.container}>
-          <Button title="My Button" onPress={() => ''} />
-        </View>
+        <Stack.Navigator
+          initialRouteName="Welcome"
+          screenOptions={{
+            headerShown: false
+          }}
+        >
+          <Stack.Screen name="Welcome" component={WelcomeScreen} />
+        </Stack.Navigator>
       </NavigationContainer>
-    </SafeAreaProvider>
+    </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
