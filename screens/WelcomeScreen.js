@@ -37,9 +37,9 @@ export default function WelcomeScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  bigContainer: { flex: 2, justifyContent: 'center', alignItems: 'center' },
   container: {
     flex: 1,
     justifyContent: 'center'
-  },
-  bigContainer: { flex: 2, justifyContent: 'center', alignItems: 'center' }
+  }
 });
