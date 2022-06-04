@@ -1,11 +1,11 @@
-import { ImageBackground, StyleSheet, View } from 'react-native';
+import { ImageBackground, StyleSheet, View, SafeAreaView } from 'react-native';
 import welcomeImage from '../assets/welcome-background.jpg';
 import { Text } from 'react-native-paper';
 import { useFonts } from 'expo-font';
 import { useTheme } from 'react-native-paper';
-import UIButton from '../components/ui/UIButton';
+import UIButton from '../components/interface/UIButton';
 
-export default function WelcomeScreen() {
+export default function WelcomeScreen({ navigation }) {
   const { h1 } = useTheme();
   const [loaded] = useFonts({
     'Special Elite': require('../assets/fonts/SpecialElite-Regular.ttf')
@@ -16,7 +16,7 @@ export default function WelcomeScreen() {
   }
 
   return (
-    <View style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }}>
       <ImageBackground
         source={welcomeImage}
         resizeMode="cover"
@@ -26,10 +26,13 @@ export default function WelcomeScreen() {
           <Text style={h1}>My personal trainer</Text>
         </View>
         <View style={styles.bigContainer}>
-          <UIButton />
+          <UIButton
+            text="Lets'go!"
+            link={() => navigation.navigate('Training')}
+          />
         </View>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 }
 
