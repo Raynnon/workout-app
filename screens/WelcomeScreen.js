@@ -1,34 +1,42 @@
-import { ImageBackground, StyleSheet, View, Text } from 'react-native';
+import { ImageBackground, StyleSheet, View } from 'react-native';
 import welcomeImage from '../assets/welcome-background.jpg';
-import { Button } from 'react-native-paper';
+import { Text } from 'react-native-paper';
+import { useFonts } from 'expo-font';
+import { useTheme } from 'react-native-paper';
+import UIButton from '../components/ui/UIButton';
 
 export default function WelcomeScreen() {
+  const { h1 } = useTheme();
+  const [loaded] = useFonts({
+    'Special Elite': require('../assets/fonts/SpecialElite-Regular.ttf')
+  });
+
+  if (!loaded) {
+    return <></>;
+  }
+
   return (
     <View style={{ flex: 1 }}>
       <ImageBackground
         source={welcomeImage}
         resizeMode="cover"
-        style={{ flex: 1, justifyContent: 'center' }}
+        style={styles.container}
       >
-        <View
-          style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Text style={{ color: 'white', marginTop: 150 }}>
-            My personal trainer
-          </Text>
+        <View style={[styles.container, { alignItems: 'center' }]}>
+          <Text style={h1}>My personal trainer</Text>
         </View>
-        <View
-          style={{ flex: 2, justifyContent: 'center', alignItems: 'center' }}
-        >
-          <Button
-            mode="contained"
-            color="white"
-            onPress={() => console.log('Pressed')}
-          >
-            Let's Go !
-          </Button>
+        <View style={styles.bigContainer}>
+          <UIButton />
         </View>
       </ImageBackground>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  bigContainer: { flex: 2, justifyContent: 'center', alignItems: 'center' }
+});
