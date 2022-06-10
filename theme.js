@@ -11,7 +11,6 @@ export const theme = {
   },
   h2: {
     color: 'white',
-    marginTop: 150,
     fontSize: 40,
     fontFamily: 'Special Elite',
     textAlign: 'center'

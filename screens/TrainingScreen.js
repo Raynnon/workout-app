@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,14 +7,17 @@ import {
   ScrollView,
   StatusBar
 } from 'react-native';
+import { AntDesign } from '@expo/vector-icons';
+
 import welcomeImage from '../assets/welcome-background.jpg';
-import { Text } from 'react-native-paper';
+import { Text, Button } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
 import UIButton from '../components/interface/UIButton';
 import InputTextLine from '../components/interface/InputTextLine';
 
 export default function TrainingScreen() {
   const { h2 } = useTheme();
+  const [numberOfSets, setNumberOfSets] = useState(1);
 
   return (
     <SafeAreaView style={styles.bigContainer}>
@@ -22,12 +26,32 @@ export default function TrainingScreen() {
           <Image
             source={welcomeImage}
             resizeMode="cover"
-            style={{ maxHeight: 500 }}
+            style={{ height: 450 }}
           />
-          <Text style={h2}>Pulls-ups</Text>
-          <InputTextLine />
-          <InputTextLine />
-          <InputTextLine />
+          <Text style={[h2, { marginVertical: 20 }]}>Pulls-ups</Text>
+
+          <View style={{ height: 175 }}>
+            {Array.from(Array(numberOfSets)).map((x, index) => (
+              <InputTextLine key={index} />
+            ))}
+            <View
+              style={{
+                flex: 1,
+                width: '100%',
+                alignSelf: 'center'
+              }}
+            >
+              <Button
+                icon="plus-circle"
+                mode="contained"
+                onPress={() => console.log('Pressed')}
+                style={{ borderRadius: 50 }}
+              >
+                Add new set
+              </Button>
+            </View>
+          </View>
+
           <UIButton text="Next exercise" />
         </View>
       </ScrollView>
@@ -43,7 +67,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-
     alignItems: 'center'
   }
 });

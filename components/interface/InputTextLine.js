@@ -14,6 +14,7 @@ export default function InputTextLine() {
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    marginBottom: 10
   }
 });
