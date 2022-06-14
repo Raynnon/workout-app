@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   StyleSheet,
   View,
@@ -7,17 +7,16 @@ import {
   ScrollView,
   StatusBar
 } from 'react-native';
-import { AntDesign } from '@expo/vector-icons';
 
 import welcomeImage from '../assets/welcome-background.jpg';
-import { Text, Button } from 'react-native-paper';
+import { Text, Button, IconButton } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
 import UIButton from '../components/interface/UIButton';
 import InputTextLine from '../components/interface/InputTextLine';
 
 export default function TrainingScreen() {
   const { h2 } = useTheme();
-  const [numberOfSets, setNumberOfSets] = useState(1);
+  const [sets, setSets] = useState([{ sets: 0, reps: 0, kg: 0 }]);
 
   return (
     <SafeAreaView style={styles.bigContainer}>
@@ -26,13 +25,30 @@ export default function TrainingScreen() {
           <Image
             source={welcomeImage}
             resizeMode="cover"
-            style={{ height: 450 }}
+            style={{ height: 375 }}
           />
           <Text style={[h2, { marginVertical: 20 }]}>Pulls-ups</Text>
 
-          <View style={{ height: 175 }}>
-            {Array.from(Array(numberOfSets)).map((x, index) => (
-              <InputTextLine key={index} />
+          <View style={{ height: 255 }}>
+            {sets.map((x, index) => (
+              <>
+                <InputTextLine key={index} />
+                <View>
+                  <IconButton
+                    icon="trash-can"
+                    color="#ff1744"
+                    size={22}
+                    style={styles.iconButton}
+                    onPress={() =>
+                      setSets(
+                        sets.filter((item, i) => {
+                          return i !== index;
+                        })
+                      )
+                    }
+                  />
+                </View>
+              </>
             ))}
             <View
               style={{
@@ -41,18 +57,22 @@ export default function TrainingScreen() {
                 alignSelf: 'center'
               }}
             >
-              <Button
-                icon="plus-circle"
-                mode="contained"
-                onPress={() => console.log('Pressed')}
-                style={{ borderRadius: 50 }}
-              >
-                Add new set
-              </Button>
+              {sets.length < 3 ? (
+                <Button
+                  icon="plus-circle"
+                  mode="contained"
+                  style={{ borderRadius: 50 }}
+                  onPress={() =>
+                    setSets([...sets, { sets: 0, reps: 0, kg: 0 }])
+                  }
+                >
+                  Add new set
+                </Button>
+              ) : null}
             </View>
           </View>
 
-          <UIButton text="Next exercise" />
+          <UIButton text="Next exercise" backgroundColor="#ffc107" />
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -68,5 +88,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center'
-  }
+  },
+  iconButton: { justifyContent: 'center', alignSelf: 'center' }
 });
