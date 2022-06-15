@@ -12,7 +12,7 @@ import welcomeImage from '../assets/welcome-background.jpg';
 import { Text, Button, IconButton } from 'react-native-paper';
 import { useTheme } from 'react-native-paper';
 import UIButton from '../components/interface/UIButton';
-import InputTextLine from '../components/interface/InputTextLine';
+import InputSet from '../components/interface/InputSet';
 
 export default function TrainingScreen() {
   const { h2 } = useTheme();
@@ -29,16 +29,21 @@ export default function TrainingScreen() {
           />
           <Text style={[h2, { marginVertical: 20 }]}>Pulls-ups</Text>
 
-          <View style={{ height: 255 }}>
+          <View style={{ maxHeight: 255 }}>
             {sets.map((x, index) => (
-              <>
-                <InputTextLine key={index} />
-                <View>
+              <View
+                key={index}
+                style={{ flexDirection: 'row', marginBottom: 10 }}
+              >
+                <InputSet key={index} />
+
+                <View style={{ marginBottom: 5 }}>
                   <IconButton
                     icon="trash-can"
                     color="#ff1744"
                     size={22}
                     style={styles.iconButton}
+                    disabled={sets.length > 1 ? false : true}
                     onPress={() =>
                       setSets(
                         sets.filter((item, i) => {
@@ -48,7 +53,7 @@ export default function TrainingScreen() {
                     }
                   />
                 </View>
-              </>
+              </View>
             ))}
             <View
               style={{

@@ -10,7 +10,9 @@ export default function UIButton({
     <Button
       mode="contained"
       color="white"
-      onPress={() => link()}
+      onPress={() => {
+        link ? link() : console.log('Pressed');
+      }}
       style={[
         {
           width: 200,
