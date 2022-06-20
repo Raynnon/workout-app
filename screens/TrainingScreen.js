@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -16,7 +16,17 @@ import InputSet from '../components/interface/InputSet';
 
 export default function TrainingScreen() {
   const { h2 } = useTheme();
-  const [sets, setSets] = useState([{ sets: 0, reps: 0, kg: 0 }]);
+  const [sets, setSets] = useState([{ sets: '', reps: '', kg: '' }]);
+
+  const updateSet = (setIndex, set) => {
+    const newArr = [...sets].map((currentSet, index) => {
+      if (setIndex === index) {
+        return { sets: set.sets, reps: set.reps, kg: set.kg };
+      }
+    });
+
+    setSets(newArr);
+  };
 
   return (
     <SafeAreaView style={styles.bigContainer}>
@@ -30,12 +40,18 @@ export default function TrainingScreen() {
           <Text style={[h2, { marginVertical: 20 }]}>Pulls-ups</Text>
 
           <View style={{ maxHeight: 255 }}>
-            {sets.map((x, index) => (
+            {sets.map((set, index) => (
               <View
                 key={index}
                 style={{ flexDirection: 'row', marginBottom: 10 }}
               >
-                <InputSet key={index} />
+                <InputSet
+                  key={index}
+                  fullSet={set}
+                  onValueChange={(newSet) => {
+                    updateSet(index, newSet);
+                  }}
+                />
 
                 <View style={{ marginBottom: 5 }}>
                   <IconButton
@@ -68,7 +84,7 @@ export default function TrainingScreen() {
                   mode="contained"
                   style={{ borderRadius: 50 }}
                   onPress={() =>
-                    setSets([...sets, { sets: 0, reps: 0, kg: 0 }])
+                    setSets([...sets, { sets: '', reps: '', kg: '' }])
                   }
                 >
                   Add new set
