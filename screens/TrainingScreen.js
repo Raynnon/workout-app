@@ -20,8 +20,11 @@ export default function TrainingScreen() {
 
   const updateSet = (setIndex, set) => {
     const newArr = [...sets].map((currentSet, index) => {
+      console.log(setIndex, index);
       if (setIndex === index) {
         return { sets: set.sets, reps: set.reps, kg: set.kg };
+      } else {
+        return currentSet;
       }
     });
 
